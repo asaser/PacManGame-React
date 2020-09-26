@@ -1,15 +1,19 @@
-import React, { Component } from 'react';
+import React, {
+    Component
+} from 'react';
 
-import { ReactComponent as PacmanSvg } from './pacman.svg';  //to jest komponent
+import {
+    ReactComponent as PacmanSvg
+} from './pacman.svg'; //to jest komponent
 import './style.css';
 
 class Pacman extends Component {
 
     state = {
-        direction: 'right', 
+        direction: 'right',
         position: {
             top: 0,
-            left: 30
+            left: 0
         }
     }
 
@@ -24,20 +28,74 @@ class Pacman extends Component {
 
     handleKeyDown = (event) => {
         console.log(event.keyCode, event.key);
+
+        const currentTop = this.state.position.top;
+        const currentLeft = this.state.position.left;
+        const { step } = this.props;
+
+        if (event.key === 'ArrowUp') {
+            this.setState({
+                position: {
+                    top: currentTop - step,
+                    left: currentLeft
+                },
+                direction: 'up'
+            });
+        } else if (event.key === 'ArrowRight') {
+            this.setState({
+                position: {
+                    top: currentTop,
+                    left: currentLeft + step
+                },
+                direction: 'right'
+            });
+        } else if (event.key === 'ArrowDown') {
+            this.setState({
+
+                position: {
+                    top: currentTop + step,
+                    left: currentLeftgit
+                },
+                direction: "down"
+            })
+        } else if (event.key === 'ArrowLeft') {
+            this.setState({
+                position: {
+                    top: currentTop,
+                    left: currentLeft - step
+                },
+                direction: "left"
+            })
+        }
     }
 
     render() {
-        return (
-            <div 
-            ref={this.pacmanRef}
-            className="pacman"
-            tabIndex="0"
-            onKeyDown={this.handleKeyDown}
-            style={this.state.position}
-            >
-                <PacmanSvg />
-            </div>
+
+        const {
+            direction,
+            position
+        } = this.state;
+
+        return ( <
+            div ref = {
+                this.pacmanRef
+            }
+            className = {
+                `pacman pacman-${direction}`
+            }
+            tabIndex = "0"
+            onKeyDown = {
+                this.handleKeyDown
+            }
+            style = {
+                position
+            } >
+            <
+            PacmanSvg / >
+            <
+            /div>
         );
+
     }
 }
 
@@ -47,5 +105,9 @@ Pacman.defaultProps = {
     border: 10 * 2,
     topScoreBoardHeight: 50
 }
+
+
+
+
 
 export default Pacman;
